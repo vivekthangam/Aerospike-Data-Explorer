@@ -605,18 +605,22 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
                     dataManipulation.executeAqlManipulation(aql);
                 } else {
                     Platform.runLater(() -> {
+                        showInfoDialog("Error","Unsupported AQL command: " + command, Alert.AlertType.ERROR);
                         statusBarLabel.setText("Unsupported AQL command: " + command);
                         progressBar.setVisible(false);
                     });
                 }
             } else {
                 Platform.runLater(() -> {
+                    showInfoDialog("Error","Not connected to Aerospike.", Alert.AlertType.ERROR);
                     statusBarLabel.setText("Not connected to Aerospike.");
                     progressBar.setVisible(false);
                 });
             }
         } else {
             Platform.runLater(() -> {
+                showInfoDialog("Error","No query to execute.", Alert.AlertType.ERROR);
+
                 statusBarLabel.setText("No query to execute.");
                 progressBar.setVisible(false);
             });
@@ -644,6 +648,8 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
             }
             client = new AerospikeClient(clientPolicy, hostList.toArray(new Host[0]));
             if (client.isConnected()) {
+                showInfoDialog("Aerospike Connection","Connected to " + hosts,Alert.AlertType.INFORMATION);
+
                 statusBarLabel.setText("Connected to " + hosts);
                 disconnectButton.setDisable(false);
                 connectButton.setDisable(true);
@@ -652,6 +658,8 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
                 statusBarLabel.setText("Connection Failed");
             }
         } catch (AerospikeException e) {
+            showInfoDialog("Aerospike Connection","Connection Error: " + e.getMessage(),Alert.AlertType.ERROR);
+
             statusBarLabel.setText("Connection Error: " + e.getMessage());
             client = null;
             disconnectButton.setDisable(true);
@@ -670,6 +678,8 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
                 client.close();
                 client = null;
                 Platform.runLater(() -> {
+                    showInfoDialog("Aerospike Connection","Disconnected",Alert.AlertType.INFORMATION);
+
                     statusBarLabel.setText("Disconnected");
                     disconnectButton.setDisable(true);
                     connectButton.setDisable(false);
