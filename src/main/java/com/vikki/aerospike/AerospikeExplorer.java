@@ -38,6 +38,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -61,7 +62,6 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
     private RadioButton jsonOutputRadio;
     private ToggleGroup outputFormatGroup;
     private ScrollPane jsonScrollPane;
-    private Label jsonOutputLabel;
     private TextField filterInput;
     private Label statusBarLabel;
     private Button connectButton;
@@ -73,177 +73,7 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
     private TextArea queryTextArea;
     private Button deleteSetButton;
     private static final String APP_STYLE = """
-        .root {
-            -fx-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            -fx-font-size: 14px;
-            -fx-background-color: #f4f6f8; /* Light background */
-        }
-
-        .top-bar {
-            -fx-padding: 10px;
-            -fx-spacing: 10px;
-            -fx-alignment: center-left;
-            -fx-background-color: #e9ecef;
-            -fx-border-bottom: 1px solid #dee2e6;
-        }
-
-        .connection-input {
-            -fx-spacing: 5px;
-        }
-
-        .connection-input .label {
-            -fx-font-weight: bold;
-            -fx-text-fill: #495057;
-        }
-
-        .connection-input .text-field {
-            -fx-padding: 8px;
-            -fx-border-color: #ced4da;
-            -fx-border-radius: 4px;
-            -fx-background-color: white;
-        }
-
-        .main-toolbar {
-            -fx-padding: 8px;
-            -fx-spacing: 8px;
-            -fx-alignment: center-left;
-            -fx-background-color: #f8f9fa;
-            -fx-border-bottom: 1px solid #dee2e6;
-        }
-
-        .main-toolbar .button {
-            -fx-background-color: #007bff;
-            -fx-text-fill: white;
-            -fx-padding: 8px 12px;
-            -fx-border-radius: 4px;
-            -fx-background-radius: 4px;
-            -fx-font-weight: bold;
-            -fx-border: none;
-            -fx-cursor: hand;
-        }
-
-        .main-toolbar .button:hover {
-            -fx-background-color: #0056b3;
-        }
-
-        .left-sidebar {
-            -fx-padding: 10px;
-            -fx-min-width: 200px;
-            -fx-border-right: 1px solid #dee2e6;
-            -fx-background-color: #ffffff;
-        }
-
-        .left-sidebar .label {
-            -fx-font-weight: bold;
-            -fx-text-fill: #495057;
-            -fx-margin-bottom: 5px;
-        }
-
-        .namespace-tree {
-            -fx-border-color: #ced4da;
-            -fx-border-width: 1px;
-            -fx-background-color: white;
-            -fx-border-radius: 4px;
-        }
-
-        .query-area {
-            -fx-padding: 10px;
-        }
-
-        .query-area .label {
-            -fx-font-weight: bold;
-            -fx-text-fill: #495057;
-            -fx-margin-bottom: 5px;
-        }
-
-        .query-tabs .tab-header-area .tab-header-background {
-            -fx-background-color: #f8f9fa;
-            -fx-border-bottom: 1px solid #dee2e6;
-        }
-
-        .query-tabs .tab {
-            -fx-background-color: #e9ecef;
-            -fx-focus-color: transparent;
-            -fx-border-radius: 4px 4px 0 0;
-        }
-
-        .query-tabs .tab:selected {
-            -fx-background-color: #ffffff;
-            -fx-border-bottom: none;
-        }
-
-        .query-tabs .tab .tab-label {
-            -fx-text-fill: #495057;
-            -fx-font-weight: bold;
-        }
-
-        .query-controls-area {
-            -fx-padding: 10px 0;
-            -fx-spacing: 10px;
-            -fx-alignment: center-left;
-        }
-
-        .data-area {
-            -fx-padding: 10px;
-            -fx-min-width: 300px;
-            -fx-border-left: 1px solid #dee2e6;
-            -fx-background-color: #ffffff;
-        }
-
-        .data-area .label {
-            -fx-font-weight: bold;
-            -fx-text-fill: #495057;
-            -fx-margin-bottom: 5px;
-        }
-
-        .filter-input {
-            -fx-padding: 8px;
-            -fx-border-color: #ced4da;
-            -fx-border-radius: 4px;
-            -fx-background-color: white;
-            -fx-margin-bottom: 10px;
-        }
-
-        .data-table-view {
-            -fx-border-color: #ced4da;
-            -fx-border-width: 1px;
-            -fx-background-color: white;
-            -fx-border-radius: 4px;
-        }
-
-        .output-format-bar {
-            -fx-padding: 10px;
-            -fx-spacing: 10px;
-            -fx-alignment: center-right;
-            -fx-background-color: #f8f9fa;
-            -fx-border-top: 1px solid #dee2e6;
-        }
-
-        .output-format-bar .label {
-            -fx-font-weight: bold;
-            -fx-text-fill: #495057;
-        }
-
-        .radio-button .radio {
-            -fx-mark-color: #007bff;
-        }
-
-        .status-bar {
-            -fx-background-color: #e9ecef;
-            -fx-padding: 8px 10px;
-            -fx-border-top: 1px solid #dee2e6;
-            -fx-alignment: center-left;
-            -fx-spacing: 10px;
-        }
-
-        .status-bar .label {
-            -fx-font-weight: normal;
-            -fx-text-fill: #6c757d;
-        }
-
-        .progress-bar {
-            -fx-pref-width: 150px;
-        }
+     
     """;
 
     public static void main(String[] args) {
@@ -286,8 +116,6 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
         connectionInput.add(passwordInput, 2, 1); // Column 2, Row 1
 
 
-
-
         topBar.getChildren().addAll(connectionInput);
         HBox.setHgrow(connectionInput, Priority.ALWAYS);
         topBar.setAlignment(Pos.CENTER_LEFT);
@@ -296,11 +124,19 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
         HBox mainToolbar = new HBox(8);
         mainToolbar.getStyleClass().add("main-toolbar");
         connectButton = new Button("Connect", new FontIcon(FontAwesomeSolid.PLUG));
+        connectButton.setId("connectButton");
         disconnectButton = new Button("Disconnect", new FontIcon(FontAwesomeSolid.PLUG));
+        disconnectButton.setId("disconnectButton");
         disconnectButton.setDisable(true);
         refreshTreeButton = new Button("Refresh", new FontIcon(FontAwesomeSolid.SYNC));
+
+
+
         newQueryTabButton = new Button("New Query", new FontIcon(FontAwesomeSolid.PLUS));
+        newQueryTabButton.setId("newQueryTabButton");
         deleteSetButton = new Button("Delete Set", new FontIcon(FontAwesomeSolid.TRASH));
+        deleteSetButton.setId("deleteSetButton");
+
         mainToolbar.getChildren().addAll(connectButton, disconnectButton, refreshTreeButton, newQueryTabButton, deleteSetButton);
 
         VBox topSection = new VBox(topBar, mainToolbar);
@@ -345,7 +181,13 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
         HBox queryControlsArea = new HBox(8);
         queryControlsArea.getStyleClass().add("query-controls-area");
         executeAqlButton = new Button("Execute", new FontIcon(FontAwesomeSolid.PLAY));
+
+        executeAqlButton.setId("executeAqlButton");
+
         helpButton = new Button("Help", new FontIcon(FontAwesomeSolid.QUESTION_CIRCLE));
+
+        helpButton.setId("helpButton");
+
         queryControlsArea.getChildren().addAll(executeAqlButton, helpButton);
         queryControlsArea.setAlignment(Pos.CENTER_LEFT);
 
@@ -391,10 +233,6 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
         HBox.setHgrow(statusBarLabel, Priority.ALWAYS);
 
 
-
-
-
-
 // --- Export Buttons ---
 //        HBox exportButtons = new HBox(8);
 //        exportButtons.getStyleClass().add("export-buttons");
@@ -415,7 +253,6 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
         exportButtons.setAlignment(Pos.CENTER_RIGHT);
 
 
-
 // --- Main Layout with Export Buttons ---
         BorderPane rootLayout = new BorderPane();
         SplitPane horizontalSplitPane = new SplitPane(leftSidebar, new VBox(queryArea, new Separator(), dataArea));
@@ -423,7 +260,6 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
         rootLayout.setTop(topSection);
         rootLayout.setCenter(horizontalSplitPane);
         rootLayout.setBottom(new VBox(new Separator(), statusBar, exportButtons)); // Separator for visual distinction
-
 
 
 // --- Export JSON ---
@@ -444,11 +280,11 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
 
             if ("JSON".equals(format)) {
                 String jsonContent = convertToJson(data);
-                saveItem.setOnAction(e -> saveToFile(jsonContent, "json",primaryStage));
+                saveItem.setOnAction(e -> saveToFile(jsonContent, "json", primaryStage));
                 copyItem.setOnAction(e -> copyToClipboard(jsonContent));
             } else if ("CSV".equals(format)) {
                 String csvContent = convertToCsv(data);
-                saveItem.setOnAction(e -> saveToFile(csvContent, "csv",primaryStage));
+                saveItem.setOnAction(e -> saveToFile(csvContent, "csv", primaryStage));
                 copyItem.setOnAction(e -> copyToClipboard(csvContent));
             }
 
@@ -458,10 +294,14 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
 // --- Export JSON ---
 
 
-
-
         Scene scene = new Scene(rootLayout, 1600, 900);
-        scene.getStylesheets().add("data:, " + APP_STYLE);
+        URL cssResource = getClass().getResource("/style.css"); // Path to your CSS file
+        if (cssResource != null) {
+            scene.getStylesheets().add(cssResource.toExternalForm());
+        } else {
+            System.err.println("Error: style.css not found in resources!");
+        }
+
 
         // --- Keyboard Shortcut for Execute ---
         scene.getAccelerators().put(
@@ -472,6 +312,7 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
     String convertToJson(List<Map<String, Object>> data) {
         JSONArray jsonArray = new JSONArray();
         for (Map<String, Object> record : data) {
@@ -535,7 +376,7 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
         clipboardContent.putString(content);
         Clipboard.getSystemClipboard().setContent(clipboardContent);
         statusBarLabel.setText("Data copied to clipboard");
-        showInfoDialog("Export Successful","Data copied to clipboard", Alert.AlertType.INFORMATION);
+        showInfoDialog("Export Successful", "Data copied to clipboard", Alert.AlertType.INFORMATION);
 
     }
 
@@ -605,21 +446,21 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
                     dataManipulation.executeAqlManipulation(aql);
                 } else {
                     Platform.runLater(() -> {
-                        showInfoDialog("Error","Unsupported AQL command: " + command, Alert.AlertType.ERROR);
+                        showInfoDialog("Error", "Unsupported AQL command: " + command, Alert.AlertType.ERROR);
                         statusBarLabel.setText("Unsupported AQL command: " + command);
                         progressBar.setVisible(false);
                     });
                 }
             } else {
                 Platform.runLater(() -> {
-                    showInfoDialog("Error","Not connected to Aerospike.", Alert.AlertType.ERROR);
+                    showInfoDialog("Error", "Not connected to Aerospike.", Alert.AlertType.ERROR);
                     statusBarLabel.setText("Not connected to Aerospike.");
                     progressBar.setVisible(false);
                 });
             }
         } else {
             Platform.runLater(() -> {
-                showInfoDialog("Error","No query to execute.", Alert.AlertType.ERROR);
+                showInfoDialog("Error", "No query to execute.", Alert.AlertType.ERROR);
 
                 statusBarLabel.setText("No query to execute.");
                 progressBar.setVisible(false);
@@ -648,7 +489,7 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
             }
             client = new AerospikeClient(clientPolicy, hostList.toArray(new Host[0]));
             if (client.isConnected()) {
-                showInfoDialog("Aerospike Connection","Connected to " + hosts,Alert.AlertType.INFORMATION);
+                showInfoDialog("Aerospike Connection", "Connected to " + hosts, Alert.AlertType.INFORMATION);
 
                 statusBarLabel.setText("Connected to " + hosts);
                 disconnectButton.setDisable(false);
@@ -658,7 +499,7 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
                 statusBarLabel.setText("Connection Failed");
             }
         } catch (AerospikeException e) {
-            showInfoDialog("Aerospike Connection","Connection Error: " + e.getMessage(),Alert.AlertType.ERROR);
+            showInfoDialog("Aerospike Connection", "Connection Error: " + e.getMessage(), Alert.AlertType.ERROR);
 
             statusBarLabel.setText("Connection Error: " + e.getMessage());
             client = null;
@@ -678,7 +519,7 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
                 client.close();
                 client = null;
                 Platform.runLater(() -> {
-                    showInfoDialog("Aerospike Connection","Disconnected",Alert.AlertType.INFORMATION);
+                    showInfoDialog("Aerospike Connection", "Disconnected", Alert.AlertType.INFORMATION);
 
                     statusBarLabel.setText("Disconnected");
                     disconnectButton.setDisable(true);
@@ -826,11 +667,8 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
             progressBar.setVisible(false);
             statusBarLabel.setText("Query Error: " + errorMessage);
             dataTableView.setPlaceholder(new Label("Query Error: " + errorMessage));
-            jsonOutputLabel.setText("Query Error: " + errorMessage);
-            jsonScrollPane.setContent(new Label(errorMessage));
-            jsonScrollPane.setVisible(true);
+
             tableOutputRadio.setSelected(false);
-            jsonOutputRadio.setSelected(true);
             System.err.println("Query Error: " + errorMessage);
         });
     }
@@ -882,6 +720,7 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
                 public TableCell<Map<String, Object>, Void> call(final TableColumn<Map<String, Object>, Void> param) {
                     final TableCell<Map<String, Object>, Void> cell = new TableCell<Map<String, Object>, Void>() {
                         final Button deleteButton = new Button("", new FontIcon(FontAwesomeSolid.TRASH));
+
                         {
                             deleteButton.setOnAction(event -> {
                                 Map<String, Object> data = getTableView().getItems().get(getIndex());
@@ -999,7 +838,7 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
                         } else if (existingValue instanceof Double) {
                             valueType = "Double";
                             try {
-                                parsedValue= Double.parseDouble(newValue);
+                                parsedValue = Double.parseDouble(newValue);
                             } catch (NumberFormatException e) {
                                 Platform.runLater(() -> statusBarLabel.setText("Error: Cannot update " + binName + " (Double) with '" + newValue + "'. Treating as String."));
                                 parsedValue = newValue; // Treat as string on parse failure
@@ -1034,110 +873,128 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
     private void showAqlHelp() {
         WebView webView = new WebView();
         String helpContent = """
-            <!DOCTYPE html>
-            <html>
-            <head>
-            <title>AQL Help</title>
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                margin: 20px;
-                padding: 20px;
-                background-color: #f4f4f4;
-                color: #333;
-                line-height: 1.6;
-              }
-              h1 {
-                color: #007bff;
-                text-align: center;
-                border-bottom: 2px solid #007bff;
-                padding-bottom: 10px;
-                margin-bottom: 20px;
-              }
-              h2 {
-                color: #28a745;
-                margin-top: 30px;
-                border-bottom: 1px solid #28a745;
-                padding-bottom: 5px;
-              }
-              p {
-                margin-bottom: 10px;
-              }
-              ul {
-                list-style-type: disc;
-                padding-left: 20px;
-                margin-bottom: 20px;
-              }
-              li {
-                margin-bottom: 5px;
-              }
-              pre {
-                background-color: #e9ecef;
-                padding: 10px;
-                border: 1px solid #ced4da;
-                border-radius: 5px;
-                overflow-x: auto;
-                margin: 10px 0;
-                font-family: monospace;
-                font-size: 14px;
-                line-height: 1.4;
-              }
-              .important {
-                color: #dc3545;
-                font-weight: bold;
-              }
-            </style>
-            </head>
-            <body>
-            <h1>AQL Help</h1>
-            <p>This section provides basic help for using AQL (Aerospike Query Language) in this tool. Currently, only a very limited subset of AQL is supported.</p>
-            <h2>Supported AQL Query</h2>
-            <p>The current version of this tool supports the following basic SELECT query:</p>
-            <pre><code>SELECT * FROM namespace.set [WHERE binName = 'value']</code></pre>
-            <p>This query retrieves all records from the specified namespace and set, and can optionally filter by a single condition.</p>
-            <h2>Examples</h2>
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <title>AQL Help</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+          }
+          h1 {
+            color: #007bff;
+            text-align: center;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+          }
+          h2 {
+            color: #28a745;
+            margin-top: 30px;
+            border-bottom: 1px solid #28a745;
+            padding-bottom: 5px;
+          }
+          p {
+            margin-bottom: 10px;
+          }
+          ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 20px;
+          }
+          li {
+            margin-bottom: 5px;
+          }
+          pre {
+            background-color: #e9ecef;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.4;
+          }
+          .important {
+            color: #dc3545;
+            font-weight: bold;
+          }
+        </style>
+        </head>
+        <body>
+        <h1>AQL Help</h1>
+        <p>This section provides detailed help for using AQL (Aerospike Query Language) in this tool.</p>
+        <h2>Supported AQL Queries</h2>
+        <h3>SELECT</h3>
+        <p>The SELECT query retrieves records from a specified namespace and set, and can optionally filter by conditions.</p>
+        <pre><code>SELECT * FROM namespace.set [WHERE binName = 'value']</code></pre>
+        <ul>
+          <li><strong>Retrieve all records from the 'users' set in the 'test' namespace:</strong></li>
+          <pre><code>SELECT * FROM test.users</code></pre>
+          <li><strong>Retrieve records from the 'users' set in the 'test' namespace where the bin 'age' is 30:</strong></li>
+          <pre><code>SELECT * FROM test.users WHERE age = '30'</code></pre>
+        </ul>
+        <h3>INSERT</h3>
+        <p>The INSERT query adds a new record to a specified namespace and set.</p>
+        <pre><code>INSERT INTO namespace.set (bin1, bin2, ...) VALUES (value1, value2, ...)</code></pre>
+        <ul>
+          <li><strong>Insert a new record into the 'users' set in the 'test' namespace:</strong></li>
+          <pre><code>INSERT INTO test.users (name, age) VALUES ('John Doe', 30)</code></pre>
+        </ul>
+        <h3>DELETE</h3>
+        <p>The DELETE query removes records from a specified namespace and set based on a condition.</p>
+        <pre><code>DELETE FROM namespace.set WHERE binName = 'value'</code></pre>
+        <ul>
+          <li><strong>Delete records from the 'users' set in the 'test' namespace where the bin 'age' is 30:</strong></li>
+          <pre><code>DELETE FROM test.users WHERE age = '30'</code></pre>
+        </ul>
+        <h3>UPDATE</h3>
+        <p>The UPDATE query modifies existing records in a specified namespace and set based on a condition.</p>
+        <pre><code>UPDATE namespace.set SET binName = 'newValue' WHERE binName = 'value'</code></pre>
+        <ul>
+          <li><strong>Update records in the 'users' set in the 'test' namespace where the bin 'age' is 30:</strong></li>
+          <pre><code>UPDATE test.users SET age = 31 WHERE age = '30'</code></pre>
+        </ul>
+        <h2>Important Notes</h2>
+        <ul>
+          <li><span class="important">Replace 'namespace' and 'set'</span> with your actual Aerospike namespace and set names.</li>
+          <li>The <code>WHERE</code> clause currently only supports equality on a single bin.</li>
+          <li>String values in the <code>WHERE</code> clause must be enclosed in single quotes.</li>
+          <li>This tool <span class="important">does NOT</span> currently support more complex AQL queries, such as:
             <ul>
-              <li><strong>Retrieve all records from the 'users' set in the 'test' namespace:</strong></li>
-              <pre><code>SELECT * FROM test.users</code></pre>
-               <li><strong>Retrieve records from the 'users' set in the 'test' namespace where the bin 'age' is 30:</strong></li>
-               <pre><code>SELECT * FROM test.users WHERE age = '30'</code></pre>
-               <li><strong>Retrieve records from the 'products' set in the 'mydb' namespace where the bin 'category' is 'electronics':</strong></li>
-               <pre><code>SELECT * FROM mydb.products WHERE category = 'electronics'</code></pre>
+              <li>Selecting specific bins (columns)</li>
+              <li>Filtering records with complex WHERE clauses (>, <, AND, OR, etc.)</li>
+              <li>Ordering results</li>
+              <li>Aggregations</li>
             </ul>
-            <h2>Important Notes</h2>
-            <ul style="list-style-type: disc;">
-              <li><span class="important">Replace 'namespace' and 'set'</span> with your actual Aerospike namespace and set names.</li>
-              <li>The <code>WHERE</code> clause currently only supports equality on a single bin.</li>
-              <li>String values in the <code>WHERE</code> clause must be enclosed in single quotes.</li>
-              <li>This tool <span class="important">does NOT</span> currently support more complex AQL queries, such as:
-                <ul style="list-style-type: circle;">
-                  <li>Selecting specific bins (columns)</li>
-                  <li>Filtering records with complex WHERE clauses (>, <, AND, OR, etc.)</li>
-                  <li>Ordering results</li>
-                  <li>Aggregations</li>
-                </ul>
-              </li>
-              <li>The AQL keywords (<code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>) are case-insensitive, but namespace, set, and bin names are case-sensitive.</li>
-              <li>Ensure that the namespace and set you specify exist in your Aerospike database and contain data.</li>
-            </ul>
-            <h2>Limitations</h2>
-            <p>This is a very basic implementation of AQL support. The following limitations apply:</p>
-            <ul>
-              <li>Only the <code>SELECT * FROM namespace.set [WHERE bin = 'value']</code> syntax is supported.</li>
-              <li>No support for complex <code>WHERE</code> clauses, bin selection, or other advanced AQL features.</li>
-              <li>Error handling is basic.</li>
-            </ul>
-            <h2>Future Enhancements</h2>
-            <p>Future versions of this tool may include:</p>
-            <ul>
-              <li>Support for more complete AQL syntax.</li>
-              <li>A query builder UI to help construct AQL queries.</li>
-              <li>Improved error handling and feedback.</li>
-              <li>Display of query execution statistics.</li>
-            </ul>
-            </body>
-            </html>
-            """;
+          </li>
+          <li>The AQL keywords (<code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>) are case-insensitive, but namespace, set, and bin names are case-sensitive.</li>
+          <li>Ensure that the namespace and set you specify exist in your Aerospike database and contain data.</li>
+        </ul>
+        <h2>Limitations</h2>
+        <p>This is a basic implementation of AQL support. The following limitations apply:</p>
+        <ul>
+          <li>Only the <code>SELECT * FROM namespace.set [WHERE bin = 'value']</code> syntax is supported.</li>
+          <li>No support for complex <code>WHERE</code> clauses, bin selection, or other advanced AQL features.</li>
+          <li>Error handling is basic.</li>
+        </ul>
+        <h2>Future Enhancements</h2>
+        <p>Future versions of this tool may include:</p>
+        <ul>
+          <li>Support for more complete AQL syntax.</li>
+          <li>A query builder UI to help construct AQL queries.</li>
+          <li>Improved error handling and feedback.</li>
+          <li>Display of query execution statistics.</li>
+        </ul>
+        </body>
+        </html>
+        """;
         webView.getEngine().loadContent(helpContent);
 
         Scene scene = new Scene(webView, 800, 600);
@@ -1155,6 +1012,7 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
         }
         jsonScrollPane.setContent(new Label(jsonArray.toString(2)));
     }
+
     private void deleteSelectedSet() {
         TreeItem<String> selectedItem = namespaceSetTree.getSelectionModel().getSelectedItem();
         if (selectedItem != null && selectedItem.getParent() != null && !selectedItem.getParent().getValue().equals(namespaceSetTree.getRoot().getValue())) {
@@ -1186,13 +1044,6 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
         }
     }
 
-    //    @Override
-//    public void onResult(List<Map<String, Object>> results) {
-//        Platform.runLater(() -> {
-//            // Update the TableView with the results
-//            updateTableView(FXCollections.observableArrayList(results));
-//        });
-//    }
     @Override
     public void stop() {
         if (client != null) {
@@ -1200,6 +1051,7 @@ public class AerospikeExplorer extends Application implements AerospikeDataManip
         }
         scanExecutor.shutdown();
     }
+
     private String newTabgetText() {
         Tab selectedTab = queryTabPane.getSelectionModel().getSelectedItem();
         if (selectedTab != null) {

@@ -1,0 +1,400 @@
+   .root {
+            /* Updated to match the gradient background in the image */
+            -fx-background-color: linear-gradient(to bottom right, #3F2E4D 0%, #2D3D4F 100%);
+            -fx-font-family: "Segoe UI", "Arial", sans-serif; /* Clean sans-serif font */
+            -fx-font-size: 13px; /* Slightly adjusted base font size */
+        }
+
+        .top-bar {
+            -fx-padding: 10px;
+            -fx-spacing: 10px;
+            -fx-alignment: center-left;
+            -fx-background-color: #e9ecef;
+            -fx-border-bottom: 1px solid #dee2e6;
+        }
+
+        .connection-input {
+            -fx-spacing: 5px;
+        }
+
+        .connection-input .label {
+            -fx-font-weight: bold;
+            -fx-text-fill: #495057;
+        }
+
+        .connection-input .text-field {
+            -fx-padding: 8px;
+            -fx-border-color: #ced4da;
+            -fx-border-radius: 4px;
+            -fx-background-color: white;
+        }
+
+        .main-toolbar {
+            -fx-padding: 8px;
+            -fx-spacing: 8px;
+            -fx-alignment: center-left;
+            -fx-background-color: #f8f9fa;
+            -fx-border-bottom: 1px solid #dee2e6;
+        }
+
+        .main-toolbar .button {
+            -fx-background-color: #007bff; /* Button Blue */
+            -fx-text-fill: white;
+            -fx-padding: 8px 12px;
+            -fx-border-radius: 4px;
+            -fx-background-radius: 4px;
+            -fx-font-weight: bold;
+            -fx-border: none;
+            -fx-cursor: hand;
+        }
+
+        .main-toolbar .button:hover {
+            -fx-background-color: #0056b3;
+        }
+
+        .left-sidebar {
+            -fx-padding: 10px;
+            -fx-min-width: 200px;
+            -fx-border-right: 1px solid #dee2e6;
+            -fx-background-color: #ffffff;
+        }
+
+        .left-sidebar .label {
+            -fx-font-weight: bold;
+            -fx-text-fill: #495057;
+            -fx-margin-bottom: 5px;
+        }
+
+        .namespace-tree {
+            -fx-border-color: #ced4da;
+            -fx-border-width: 1px;
+            -fx-background-color: white;
+            -fx-border-radius: 4px;
+        }
+
+        .query-area {
+            -fx-padding: 10px;
+        }
+
+        .query-area .label {
+            -fx-font-weight: bold;
+            -fx-text-fill: #495057;
+            -fx-margin-bottom: 5px;
+        }
+
+        .query-tabs .tab-header-area .tab-header-background {
+            -fx-background-color: #f8f9fa;
+            -fx-border-bottom: 1px solid #dee2e6;
+        }
+
+        .query-tabs .tab {
+            -fx-background-color: #e9ecef;
+            -fx-focus-color: transparent;
+            -fx-border-radius: 4px 4px 0 0;
+        }
+
+        .query-tabs .tab:selected {
+            -fx-background-color: #ffffff;
+            -fx-border-bottom: none;
+        }
+
+        .query-tabs .tab .tab-label {
+            -fx-text-fill: #495057;
+            -fx-font-weight: bold;
+        }
+
+        .query-controls-area {
+            -fx-padding: 10px 0;
+            -fx-spacing: 10px;
+            -fx-alignment: center-left;
+        }
+
+        .data-area {
+            -fx-padding: 10px;
+            -fx-min-width: 300px;
+            -fx-border-left: 1px solid #dee2e6;
+            -fx-background-color: #ffffff;
+        }
+
+        .data-area .label {
+            -fx-font-weight: bold;
+            -fx-text-fill: #495057;
+            -fx-margin-bottom: 5px;
+        }
+
+        .filter-input {
+            -fx-padding: 8px;
+            -fx-border-color: #ced4da;
+            -fx-border-radius: 4px;
+            -fx-background-color: white;
+            -fx-margin-bottom: 10px;
+        }
+
+        /* Existing .data-table-view will be overridden by more specific .table-view rules below */
+        /* If you have a specific TableView instance you want to style uniquely,
+           give it an ID or a specific style class in Java and target it. */
+        .data-table-view {
+            -fx-border-color: #ced4da;
+            -fx-border-width: 1px;
+            -fx-background-color: white;
+            -fx-border-radius: 4px;
+        }
+
+        .output-format-bar {
+            -fx-padding: 10px;
+            -fx-spacing: 10px;
+            -fx-alignment: center-right;
+            -fx-background-color: #f8f9fa;
+            -fx-border-top: 1px solid #dee2e6;
+        }
+
+        .output-format-bar .label {
+            -fx-font-weight: bold;
+            -fx-text-fill: #495057;
+        }
+
+        .radio-button .radio {
+            -fx-mark-color: #007bff;
+        }
+
+        .status-bar {
+            -fx-background-color: #e9ecef;
+            -fx-padding: 8px 10px;
+            -fx-border-top: 1px solid #dee2e6;
+            -fx-alignment: center-left;
+            -fx-spacing: 10px;
+        }
+
+        .status-bar .label {
+            -fx-font-weight: normal;
+            -fx-text-fill: #6c757d;
+        }
+
+        .progress-bar {
+            -fx-pref-width: 150px;
+        }
+
+        /* --- NEW: TableView Container Styling (the light gray box with rounded corners and shadow) --- */
+       /* Overall Application Background (to match the gradient in the image) */
+       .app-root {
+           /* Using linear-gradient for the background as seen in the image */
+           -fx-background-color: linear-gradient(to bottom right, #3F2E4D 0%, #2D3D4F 100%);
+           -fx-font-family: "Segoe UI", "Arial", sans-serif; /* Clean sans-serif font */
+           -fx-font-size: 13px;
+       }
+
+       /* Container for the TableView (the light gray box with rounded corners and shadow) */
+       .table-container {
+           -fx-background-color: #F8F8F8; /* Light gray background */
+           -fx-background-radius: 10px; /* Rounded corners */
+           -fx-padding: 0; /* No internal padding for the container itself */
+           -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 0); /* Soft shadow */
+           /* Leave width/height to Java code's tableContainer.setPrefWidth/Height for responsiveness */
+       }
+
+       /* Base TableView Styling */
+       .table-view {
+           -fx-background-color: transparent; /* Make TableView background transparent to show container's background */
+           -fx-border-color: transparent; /* No outer border for the table */
+           -fx-border-width: 0;
+           -fx-padding: 0; /* No padding around the table control itself */
+       }
+
+       /* --- Table Header Styling --- */
+       .table-view .column-header-background {
+           -fx-background-color: #3B4052; /* Dark blue/gray header background */
+           -fx-background-radius: 10px 10px 0 0; /* Rounded top corners only */
+           -fx-padding: 0; /* No padding on the background element */
+           -fx-pref-height: 45px; /* Fixed height for the header background */
+       }
+
+       .table-view .column-header {
+           -fx-background-color: transparent; /* Transparent to allow column-header-background to show through */
+           -fx-size: 45px; /* Height of the individual header cells */
+           -fx-padding: 0 15px; /* Padding for text inside header cells (top/bottom 0, left/right 15px) */
+           -fx-border-width: 0; /* No borders for individual headers */
+       }
+
+       .table-view .column-header .label {
+           -fx-text-fill: white; /* White text for headers */
+           -fx-font-weight: bold; /* Bold text */
+           -fx-font-size: 14px; /* Slightly larger font */
+           -fx-alignment: CENTER_LEFT; /* Default alignment for most text headers */
+           /* Ensure label can take full width and doesn't clip if column is too narrow */
+           -fx-text-overrun: clip; /* Clip if text is too long (default, but explicit) */
+           /* -fx-wrap-text: true;  // Use this if you want header text to wrap, but usually not for tables */
+       }
+
+       /* Specific alignment for numeric headers (Price, Quantity, Total) */
+       /* Using nth-of-type to target columns based on their order in the TableView */
+       /* Note: CSS column indexing starts from 1 */
+       .table-view .column-header:nth-of-type(4) .label, /* Price column (4th) */
+       .table-view .column-header:nth-of-type(5) .label, /* Quantity column (5th) */
+       .table-view .column-header:nth-of-type(6) .label { /* Total column (6th) */
+           -fx-alignment: CENTER_RIGHT;
+       }
+
+       /* Remove any default borders/dividers that might appear below the header */
+       .table-view .nested-column-header,
+       .table-view .table-column {
+           -fx-border-width: 0;
+       }
+
+       /* Filler area to the right of the last column header (if columns don't fill width) */
+       .table-view .filler {
+           -fx-background-color: #3B4052; /* Match header background */
+           -fx-background-radius: 0 10px 0 0; /* Rounded top-right corner only */
+       }
+
+       /* --- Table Rows Styling --- */
+       .table-view .table-row-cell {
+           -fx-background-color: #FFFFFF; /* Default background for odd rows (or start row) */
+           -fx-cell-size: 35px; /* Height of each row */
+           -fx-border-width: 0 0 1px 0; /* Subtle horizontal line at the bottom of each row */
+           -fx-border-color: #F0F0F0; /* Very light grey for the line */
+           -fx-background-insets: 0; /* Ensure background fills completely to the border */
+           -fx-padding: 0; /* No padding on the row itself */
+       }
+
+       .table-view .table-row-cell:odd {
+           -fx-background-color: #FAFAFA; /* Very light grey for alternating rows */
+       }
+
+       /* Remove bottom border for the last row to prevent double border or strange artifact */
+       .table-view .table-row-cell:last-visible-row {
+           -fx-border-width: 0;
+       }
+
+       /* --- UPDATED: Style for selected rows --- */
+       /* Based on image_312c21.png, the selected row has a very light blue/cyan tint */
+       .table-view .table-row-cell:selected {
+           -fx-background-color: #E0F2F7; /* A very light cyan/blue for selected rows */
+       }
+
+       /* --- UPDATED: Table Cells Styling for Vertical Alignment & Truncation --- */
+       .table-view .table-cell {
+           -fx-background-color: transparent; /* Transparent to let row background show through */
+           -fx-border-width: 0; /* No vertical borders between cells */
+           -fx-padding: 0 15px; /* Padding for text inside cells (top/bottom 0, left/right 15px) */
+           -fx-text-fill: #333333; /* Dark grey text color for data */
+           -fx-font-size: 13px;
+
+           /* FIX 1: Vertical Alignment for row text */
+           -fx-alignment: CENTER_LEFT; /* Default to center-left for all cells */
+           /* For numeric columns, the Java CellFactory's setAlignment(Pos.CENTER_RIGHT) will override this */
+
+           /* FIX 3 related: Ensure text within cell is not truncated if column is wide enough */
+           -fx-text-overrun: clip; /* Ensures text is clipped rather than showing ellipsis. This is default for label. */
+           /* If you want text to wrap, use -fx-wrap-text: true; (but usually not desired for tables) */
+       }
+
+       /* --- Scrollbar Styling (Minimal as in image) --- */
+       .table-view .scroll-bar {
+           -fx-background-color: transparent;
+       }
+
+       /* Style for the track of the scrollbar */
+       .table-view .scroll-bar:horizontal .track,
+       .table-view .scroll-bar:vertical .track {
+           -fx-background-color: transparent;
+           -fx-border-color: transparent;
+           -fx-background-radius: 0;
+       }
+
+       /* Style for the thumb (the draggable part) of the scrollbar */
+       .table-view .scroll-bar:horizontal .thumb,
+       .table-view .scroll-bar:vertical .thumb {
+           -fx-background-color: #999999; /* Grey thumb */
+           -fx-background-insets: 0;
+           -fx-background-radius: 5px; /* Slightly rounded thumb */
+       }
+
+       .table-view .scroll-bar:horizontal .thumb:hover,
+       .table-view .scroll-bar:vertical .thumb:hover {
+           -fx-background-color: #777777; /* Darker on hover */
+       }
+
+       /* Hide scrollbar buttons (arrows) */
+       .table-view .scroll-bar .increment-button,
+       .table-view .scroll-bar .decrement-button {
+           -fx-padding: 0;
+           -fx-background-color: transparent;
+       }
+       .table-view .scroll-bar .increment-arrow,
+       .table-view .scroll-bar .decrement-arrow {
+           -fx-shape: " "; /* Make the arrow shape empty */
+           -fx-padding: 0;
+       }
+
+#connectButton {
+    -fx-background-color: #28a745; /* Green */
+    -fx-text-fill: white;
+}
+#connectButton:hover {
+    -fx-background-color: #218838;
+}
+
+/* Disconnect Button */
+#disconnectButton {
+    -fx-background-color: #dc3545; /* Red */
+    -fx-text-fill: white;
+}
+#disconnectButton:hover {
+    -fx-background-color: #c82333;
+}
+
+/* Refresh Button */
+#refreshButton {
+    -fx-background-color: #007bff; /* Blue */
+    -fx-text-fill: white;
+}
+#refreshButton:hover {
+    -fx-background-color: #0056b3;
+}
+
+/* New Query Button */
+#newQueryButton {
+    -fx-background-color: #ffc107; /* Yellow/Orange */
+    -fx-text-fill: #212529; /* Dark text for light background */
+}
+#newQueryButton:hover {
+    -fx-background-color: #e0a800;
+}
+
+/* Delete Set Button */
+#deleteSetButton {
+    -fx-background-color: #17a2b8; /* Cyan/Info */
+    -fx-text-fill: white;
+}
+#deleteSetButton:hover {
+    -fx-background-color: #138496;
+}
+
+/* Execute Button */
+#executeAqlButton {
+    -fx-background-color: #007bff; /* Blue */
+    -fx-text-fill: white;
+}
+#executeAqlButton:hover {
+    -fx-background-color: #0056b3;
+}
+
+/* Help Button */
+#helpButton {
+    -fx-background-color: #6c757d; /* Grey */
+    -fx-text-fill: white;
+}
+#helpButton:hover {
+    -fx-background-color: #5a6268;
+}
+
+/* You might still want a general button style for other buttons that don't need unique colors */
+.button {
+    -fx-padding: 8px 12px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
